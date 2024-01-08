@@ -27,10 +27,13 @@ public class WebSecurityConfig {
 	@SuppressWarnings("removal")
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.httpBasic();
+		http.formLogin();
         http.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/couponapi/coupons").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}","/","/showGetCoupon", "/getCoupon")
+                .hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/showCreateCoupon","/createCoupon","/createResponse").hasAnyRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/couponapi/coupons","/saveCoupon").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("USER", "ADMIN")
                 .and().csrf(csrf -> csrf.disable());
 		http.authenticationProvider(daoAuthenticationProvider());
 		return http.build();
