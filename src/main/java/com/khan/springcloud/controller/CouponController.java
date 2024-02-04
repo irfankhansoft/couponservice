@@ -12,6 +12,7 @@ import com.khan.springcloud.repos.CouponRepo;
 @Controller
 public class CouponController {
 
+	// this is controller class update
 	@Autowired
 	private CouponRepo repo;
 
